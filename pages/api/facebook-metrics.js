@@ -8,11 +8,25 @@ export default async function handler(req, res) {
 
     const { startDate, endDate } = getRangeFromQuery(req.query);
 
-    const [totalFollowers, postStats, adStats] = await Promise.all([
-      fetchTotalFollowers({ objectId: pageId }),
-      fetchFacebookPostStats({ pageId, since: startDate, until: endDate }),
-      fetchAdStats({ platform: "facebook", since: startDate, until: endDate }),
-    ]);
+    console.log("Fetching total followers...");
+const totalFollowers = await fetchTotalFollowers({ objectId: pageId });
+console.log("✓ Total followers OK");
+
+console.log("Fetching Facebook post stats...");
+const postStats = await fetchFacebookPostStats({
+  pageId,
+  since: startDate,
+  until: endDate,
+});
+console.log("✓ Facebook posts OK");
+
+console.log("Fetching Facebook ad stats...");
+const adStats = await fetchAdStats({
+  platform: "facebook",
+  since: startDate,
+  until: endDate,
+});
+console.log("✓ Facebook ads OK");
 
     res.status(200).json({
       totalFollowers,
