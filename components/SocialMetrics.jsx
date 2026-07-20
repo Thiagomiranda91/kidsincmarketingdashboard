@@ -61,8 +61,22 @@ export default function SocialMetrics({ platformName, brandColor, metrics, isLiv
         <div style={{ display: "flex", gap: 14, flexWrap: "wrap" }}>
           <KPICard icon={Users} eyebrow="Total Followers" value={fmtNum(metrics.totalFollowers)} sub="current" />
           <KPICard icon={FileText} eyebrow="Posts" value={fmtNum(metrics.posts)} sub="published" />
-          <KPICard icon={ThumbsUp} eyebrow="Likes" value={fmtNum(metrics.likes)} sub="across posts" />
-          <KPICard icon={Flame} eyebrow="Engagements" value={fmtNum(metrics.engagements)} sub="likes + comments + shares" />
+          {platformName === "Instagram" && (
+  <>
+    <KPICard
+      icon={ThumbsUp}
+      eyebrow="Likes"
+      value={fmtNum(metrics.likes)}
+      sub="across posts"
+    />
+    <KPICard
+      icon={Flame}
+      eyebrow="Engagements"
+      value={fmtNum(metrics.engagements)}
+      sub="likes + comments + shares"
+    />
+  </>
+)}
         </div>
 
         <SectionLabel>Ads — {rangeLabel(range)}</SectionLabel>
