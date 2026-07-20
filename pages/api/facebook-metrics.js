@@ -17,10 +17,10 @@ export default async function handler(req, res) {
     const { startDate, endDate } = getRangeFromQuery(req.query);
 
     const [
-      totalFollowers,
-      posts,
-      adStats,
-    ] = await Promise.all([
+  totalFollowers,
+  postStats,
+  adStats,
+] = await Promise.all([
       fetchFacebookFollowers({ pageId }),
       fetchFacebookPosts({
         pageId,
@@ -35,13 +35,15 @@ export default async function handler(req, res) {
     ]);
 
     res.status(200).json({
-      totalFollowers,
-      posts,
-      adViews: adStats.views,
-      adReach: adStats.reach,
-      adSpend: adStats.spend,
-      adCPC: adStats.cpc,
-    });
+  totalFollowers,
+  posts: postStats.postCount,
+  likes: postStats.likes,
+  engagements: postStats.engagements,
+  adViews: adStats.views,
+  adReach: adStats.reach,
+  adSpend: adStats.spend,
+  adCPC: adStats.cpc,
+});
 
   } catch (err) {
     console.error(err);
