@@ -1,5 +1,9 @@
 import { getRangeFromQuery } from "../../lib/dateRange";
-import { fetchTotalFollowers, fetchInstagramMediaStats, fetchAdStats } from "../../lib/metaClient";
+import {
+  fetchInstagramFollowers,
+  fetchInstagramMediaStats,
+  fetchAdStats,
+} from "../../lib/metaClient";
 
 export default async function handler(req, res) {
   try {
@@ -9,7 +13,7 @@ export default async function handler(req, res) {
     const { startDate, endDate } = getRangeFromQuery(req.query);
 
     const [totalFollowers, mediaStats, adStats] = await Promise.all([
-      fetchTotalFollowers({ objectId: igUserId }),
+      fetchInstagramFollowers({ igUserId }),
       fetchInstagramMediaStats({ igUserId, since: startDate, until: endDate }),
       fetchAdStats({ platform: "instagram", since: startDate, until: endDate }),
     ]);
